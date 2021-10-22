@@ -5,20 +5,20 @@
         <meta charset="utf-8">
     </head>
     <body>
-        {% if score > 0 %}
-        Aktualny wynik: {{score}}/401 <br>
+        {% if user_score > 0 %}
+        Aktualny wynik: {{user_score}}/401 <br>
         {% else %}
         Aktualny wynik: 0/401 <br>
         {% endif %}
-        {% if userAnswer %}
-        Ostatnia tablica: {{userAnswer}}
+        {% if user_outcome %}
+        Ostatnia tablica: {{user_outcome}}
         {% endif %}
         
-        {% set lastPlateDistrict=newPlateDistrict %}
-        <div name="plate">{{ newPlate }}</div>
+        {% set user_last_plate_district=new_plate_district %}
+        <div name="plate">{{ new_plate }}</div>
         
         <form action="{{ url_for('home') }}" method="POST">
-            <input name="userAnswer" placeholder="Wpisz Powiat lub Miasto">
+            <input name="user_answer" placeholder="Wpisz Powiat lub Miasto">
             <button type="submit">Sprawdź</button>
         </form>
     </body>
