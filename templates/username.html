@@ -3,12 +3,12 @@
     <head>
         <title>Polskie Tablice</title>
         <meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/username.css') }}">
     </head>
     <body>
-        
-        <form action="{{ url_for('home') }}" method="POST">
-            <input name="username" placeholder="wpisz imie">
-            <button type="submit">Sprawdź</button>
+        <form action="{{ url_for('home') }}" method="POST" class="usernameForm">
+            <input name="username_input" class="usernameInput" placeholder="Wpisz swoję imię lub nick">
+            <button type="submit" class="submitButton">Zapisz</button>
         </form>
     </body>
 </html>

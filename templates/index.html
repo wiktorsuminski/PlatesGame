@@ -3,23 +3,29 @@
     <head>
         <title>Polskie Tablice</title>
         <meta charset="utf-8">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/index.css') }}">
+        
     </head>
     <body>
+        <div name="user_score" class="userScore">
         {% if user_score > 0 %}
-        Aktualny wynik: {{user_score}}/401 <br>
+        <div>Aktualny wynik: {{user_score}}/401 </div>
         {% else %}
-        Aktualny wynik: 0/401 <br>
+        <div>Aktualny wynik: 0/401 </div>
         {% endif %}
         {% if user_outcome %}
-        Ostatnia tablica: {{user_outcome}}
+        <div>Ostatnia tablica: <a style="color:{{answer_color}};">{{user_outcome}}</a></div>
         {% endif %}
-        
+        </div>
         {% set user_last_plate_district=new_plate_district %}
-        <div name="plate">{{ new_plate }}</div>
+        <div name="plate" class="plate">
+            <div class="country"><div><img class="ueStars" src="{{ url_for('static',filename='images/UE_stars.png') }}"></div><a class="countryCode">PL</a></div>
+            <div class="plateNumbers">{{ new_plate }}</div>
+        </div>
         
-        <form action="{{ url_for('home') }}" method="POST">
-            <input name="user_answer" placeholder="Wpisz Powiat lub Miasto">
-            <button type="submit">Sprawdź</button>
+        <form action="{{ url_for('home') }}" method="POST" class="answerForm">
+            <input name="user_answer" class="userAnswer" placeholder="Wpisz Powiat lub Miasto">
+            <button type="submit" class="submitButton">Sprawdź</button>
         </form>
     </body>
 </html>

@@ -79,8 +79,11 @@ all_plate_districts = {'BI': 'białystok', 'BS': 'suwałki', 'BL': 'łomża', 'B
                        'ZWA': 'powiat wałecki', 'ZLO': 'powiat łobeski'
                        }
 
+plate_chars = list(string.ascii_uppercase+string.digits)
+plate_chars.remove('Q')
 
-def plate_number_generator(size=5, chars=string.ascii_uppercase + string.digits):
+
+def plate_number_generator(size=5, chars=plate_chars):
     return ''.join(random.choice(chars) for _ in range(size))
 
 
@@ -88,45 +91,58 @@ def plate_number_generator(size=5, chars=string.ascii_uppercase + string.digits)
 def home():
     global all_plate_districts
     if request.method == "POST":
-        if "username" in request.form:
-            session['user'] = request.form['username']
+        if "username_input" in request.form:
+            session['user'] = request.form['username_input']
             session['user_score'] = int()
             session['user_plate_districts'] = all_plate_districts
 
         print(session['user']+":"+str(len(session['user_plate_districts'])
                                       )+" score:"+str(session['user_score']))
-        user_last_plate_district = session.get(
+        user_last_plate = session.get(
             'user_last_plate_district', None)
         if request.form.get('user_answer'):
             session['user_answer'] = request.form.get('user_answer').lower()
             user_answer = session['user_answer']
-            if user_last_plate_district != None:
-                if user_answer in session['user_plate_districts'][user_last_plate_district.split(' ', 1)[0]]:
+            if user_last_plate != None:
+                if len(user_last_plate) == 8:
+                    user_last_plate_district = user_last_plate.split('\t', 1)[
+                        0]
+                else:
+                    user_last_plate_district = user_last_plate.split(' ', 1)[0]
+
+                if user_answer in session['user_plate_districts'][user_last_plate_district]:
                     user_outcome = 'Dobrze'
+                    answer_color = 'lime'
                     session['user_score'] += 1
-                    del session['user_plate_districts'][user_last_plate_district.split(' ', 1)[
-                        0]]
+                    del session['user_plate_districts'][user_last_plate_district]
                 else:
                     user_outcome = "Źle"
+                    answer_color = 'red'
         else:
-            if user_last_plate_district == None:
+            if user_last_plate == None:
                 user_outcome = ''
+                answer_color = ''
             else:
                 user_outcome = 'Źle'
+                answer_color = 'red'
         if len(session['user_plate_districts']) > 0:
             new_plate_district = random.choice(
                 list(session['user_plate_districts'].items()))
-            new_plate = new_plate_district[0]+" "+plate_number_generator()
+            if len(new_plate_district[0]) == 2:
+                new_plate = new_plate_district[0] +\
+                    '\t'+plate_number_generator()
+            else:
+                new_plate = new_plate_district[0]+" "+plate_number_generator()
             session['user_last_plate_district'] = new_plate
-            return render_template('index.html', new_plate=new_plate, user_outcome=user_outcome, user_score=session['user_score'], newPlateDistrict=new_plate_district)
+            return render_template('index.html', new_plate=new_plate, user_outcome=user_outcome, answer_color=answer_color, user_score=session['user_score'], newPlateDistrict=new_plate_district)
         else:
             new_plate = "Koniec gry"
-            return render_template('index.html', new_plate=new_plate, user_outcome=user_outcome, user_score=session['user_score'])
+            return render_template('index.html', new_plate=new_plate, user_outcome=user_outcome, answer_color=answer_color, user_score=session['user_score'])
     else:
         return render_template('username.html')
 
 
-@app.route('/clear')
+@ app.route('/clear')
 def clear():
     session.clear()
     return redirect(url_for('home'))

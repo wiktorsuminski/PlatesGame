@@ -1,0 +1,37 @@
+body {
+  margin: 0 auto;
+  background-color: rgb(37, 37, 37);
+}
+.usernameForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 25%;
+}
+.usernameInput:focus {
+  outline: 3px solid rgba(255, 255, 255, 0.5);
+}
+.usernameInput {
+  font-size: 20px;
+  width: 300px;
+  height: 50px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  border: 3px black solid;
+}
+.submitButton:hover {
+  outline: 5px solid rgba(0, 98, 255, 0.5);
+  color: rgb(255, 255, 255);
+  box-shadow: 0px 0px;
+}
+.submitButton {
+  font-family: Arial;
+  font-size: 20px;
+  box-shadow: 0px 5px rgb(0, 110, 255);
+  border: 0;
+  background-color: rgb(0, 162, 255);
+  border-radius: 10px;
+  width: 100px;
+  height: 40px;
+}
