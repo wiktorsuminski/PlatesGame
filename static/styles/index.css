@@ -7,17 +7,60 @@ body {
   font-family: Arklatrs;
   src: url('../fonts/arklatrs.ttf');
 }
+/* Dark mode*/
+.darkMode {
+  background: white;
+}
+.darkMode .userScore {
+  color: black;
+}
+.darkMode .darkModeIcon {
+  filter: invert(0%);
+}
+.darkMode .darkModeButton {
+  box-shadow: 0 0px 10px -2px black;
+}
+.darkMode .userAnswer {
+  box-shadow: 0 0 15px -2px black;
+}
+.darkMode .userAnswer:focus {
+  box-shadow: 0 0 30px -4px black;
+}
+/* Dark mode button */
+.darkModeButton {
+  width: 50px;
+  height: 50px;
+  padding: 0;
+  margin-top: -5%;
+  margin-bottom: 2.5%;
+  margin-left: calc(50% + 556px);
+  background-color: transparent;
+  border: 0;
+  border-radius: 25px;
+  box-shadow: 0 0px 10px -2px white;
+}
+
+.darkModeIcon {
+  margin: 0;
+  width: 50px;
+  height: 50px;
+  filter: invert(100%);
+}
 /*Score*/
 .userScore {
   font-family: Arial;
   font-size: 30px;
   color: white;
   margin-top: 5%;
-  margin-bottom: 5%;
+  margin-bottom: 2.5%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+.darkMode .plate {
+  box-shadow: 0 0 20px -2px black;
 }
 
 /*Plate*/
@@ -29,6 +72,7 @@ body {
   border: solid black 2px;
   border-radius: 20px;
   background-color: white;
+  box-shadow: 0 0 15px -2px white;
 }
 
 .plateNumbers {
@@ -69,7 +113,8 @@ body {
   justify-content: center;
 }
 .userAnswer:focus {
-  outline: 3px solid rgba(255, 255, 255, 0.5);
+  outline: 0;
+  box-shadow: 0 0 30px -4px white;
 }
 
 .userAnswer {
@@ -82,11 +127,11 @@ body {
   font-size: 40px;
   background-color: rgb(218, 218, 218);
   color: black;
+  box-shadow: 0 0 15px -2px white;
 }
 .submitButton:hover {
-  outline: 5px solid rgba(0, 98, 255, 0.5);
+  box-shadow: 0px 0px 30px -2px rgb(0, 110, 255);
   color: white;
-  box-shadow: 0px 0px;
 }
 .submitButton {
   font-family: Arial;
@@ -100,13 +145,43 @@ body {
 }
 
 @media only screen and (max-width: 1250px) {
+  /* Dark mode mobile */
+  .darkMode .darkModeButton {
+    box-shadow: 0 0 30px -2px black;
+  }
+  .darkMode .plate {
+    box-shadow: 0 0 30px -2px black;
+  }
+  .darkMode .userAnswer {
+    box-shadow: 0 0 30px -3px black;
+  }
+  .darkMode .userAnswer:focus {
+    box-shadow: 0 0 60px -6px black;
+  }
+  /* Dark mode button mobile*/
+  .darkModeButton {
+    width: 150px;
+    height: 150px;
+    padding: 0;
+    margin-top: 2.5%;
+    margin-left: calc(50% + 250px);
+    background-color: transparent;
+    border: 0;
+    border-radius: 75px;
+    box-shadow: 0 0px 30px -2px white;
+  }
+  .darkModeIcon {
+    width: 150px;
+    height: 150px;
+  }
+
   /* Score mobile */
   .userScore {
     font-family: Arial;
     font-size: 60px;
     color: white;
     margin-top: 5%;
-    margin-bottom: 5%;
+    margin-bottom: 2.5%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -114,14 +189,15 @@ body {
   }
   /* Plate mobile */
   .plate {
-    margin-top: 20%;
+    margin-top: 5%;
     height: 700px;
     width: 800px;
     margin-left: calc(50vw - 400px);
     position: relative;
-    border: solid black 2px;
+    border: solid black 6px;
     border-radius: 20px;
     background-color: white;
+    box-shadow: 0 0 30px -2px white;
   }
 
   .plateNumbers {
@@ -136,7 +212,7 @@ body {
   .country {
     width: 150px;
     height: 350px;
-    border-radius: 17px 0 0px 0px;
+    border-radius: 14px 0 0px 0px;
     color: rgb(255, 255, 255);
     position: absolute;
     display: inline-block;
@@ -163,7 +239,7 @@ body {
     justify-content: center;
   }
   .userAnswer:focus {
-    outline: 15px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 60px -6px white;
   }
 
   .userAnswer {
@@ -176,16 +252,16 @@ body {
     font-size: 60px;
     background-color: rgb(218, 218, 218);
     color: black;
+    box-shadow: 0 0 30px -3px white;
   }
   .submitButton:hover {
-    outline: 20px solid rgba(0, 98, 255, 0.5);
     color: white;
-    box-shadow: 0px 0px;
+    box-shadow: 0px 0px 60px -6px rgb(0, 162, 255);
   }
   .submitButton {
     font-family: Arial;
     font-size: 80px;
-    box-shadow: 0px 5px rgb(0, 110, 255);
+    box-shadow: 0px 10px rgb(0, 110, 255);
     border: 0;
     background-color: rgb(0, 162, 255);
     border-radius: 10px;

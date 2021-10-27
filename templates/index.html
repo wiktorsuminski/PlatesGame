@@ -17,7 +17,9 @@
         <div>Ostatnia tablica: <a style="color:{{answer_color}};">{{user_outcome}}</a></div>
         {% endif %}
         </div>
+        <button onclick="dark_mode_toggle()" class="darkModeButton"><img class="darkModeIcon" src="{{ url_for('static',filename='icons/dark-mode-icon.png') }}"></button>
         {% set user_last_plate_district=new_plate_district %}
+        
         <div name="plate" class="plate">
             <div class="country"><div><img class="ueStars" src="{{ url_for('static',filename='images/UE_stars.png') }}"></div><a class="countryCode">PL</a></div>
             <div class="plateNumbers">{{ new_plate }}</div>
@@ -28,4 +30,30 @@
             <button type="submit" class="submitButton">Sprawdź</button>
         </form>
     </body>
+    <script>
+        onload=if_dark_mode();
+        function dark_mode_toggle(){
+            if(sessionStorage.getItem('dark_mode_off')===null){
+                dark_mode()
+                sessionStorage.setItem('dark_mode_off',true);
+            }
+            else if (sessionStorage.getItem('dark_mode_off')=='true'){
+                dark_mode();
+                sessionStorage.setItem('dark_mode_off',false);
+            }
+            else {
+                dark_mode();
+                sessionStorage.setItem('dark_mode_off',true)
+            }
+        }
+        function dark_mode(){
+            var element=document.body;
+            element.classList.toggle("darkMode");
+        }
+        function if_dark_mode(){
+            if(sessionStorage.getItem('dark_mode_off')=='true'){
+                dark_mode()
+            }
+        }
+    </script>
 </html>

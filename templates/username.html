@@ -6,9 +6,37 @@
         <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/username.css') }}">
     </head>
     <body>
+        <button onclick="dark_mode_toggle()" class="darkModeButton"><img class="darkModeIcon" src="{{ url_for('static',filename='icons/dark-mode-icon.png') }}"></button>
+
         <form action="{{ url_for('home') }}" method="POST" class="usernameForm">
-            <input name="username_input" class="usernameInput" placeholder="Wpisz swoję imię lub nick">
+            <input required name="username_input" class="usernameInput" placeholder="Wpisz swoję imię lub nick">
             <button type="submit" class="submitButton">Zapisz</button>
         </form>
     </body>
+    <script>
+        onload=if_dark_mode();
+        function dark_mode_toggle(){
+            if(sessionStorage.getItem('dark_mode_off')===null){
+                dark_mode()
+                sessionStorage.setItem('dark_mode_off',true);
+            }
+            else if (sessionStorage.getItem('dark_mode_off')=='true'){
+                dark_mode();
+                sessionStorage.setItem('dark_mode_off',false);
+            }
+            else {
+                dark_mode();
+                sessionStorage.setItem('dark_mode_off',true)
+            }
+        }
+        function dark_mode(){
+            var element=document.body;
+            element.classList.toggle("darkMode");
+        }
+        function if_dark_mode(){
+            if(sessionStorage.getItem('dark_mode_off')=='true'){
+                dark_mode()
+            }
+        }
+    </script>
 </html>

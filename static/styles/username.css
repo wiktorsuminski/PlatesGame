@@ -2,15 +2,54 @@ body {
   margin: 0 auto;
   background-color: rgb(37, 37, 37);
 }
+/* Dark mode*/
+.darkMode {
+  background-color: white;
+}
+.darkMode .usernameInput {
+  box-shadow: 0 0 15px -2px black;
+}
+.darkMode .usernameInput:focus {
+  box-shadow: 0 0 30px -4px black;
+}
+.darkMode .darkModeIcon {
+  filter: invert(0%);
+}
+.darkMode .darkModeButton {
+  box-shadow: 0 0px 10px -2px black;
+}
+/* Dark mode button*/
+.darkModeButton {
+  width: 50px;
+  height: 50px;
+  padding: 0;
+  margin-top: 17.5%;
+  margin-bottom: 2.5%;
+  margin-left: calc(50% + 100px);
+  background-color: transparent;
+  border: 0;
+  border-radius: 25px;
+  box-shadow: 0 0px 10px -2px white;
+}
+
+.darkModeIcon {
+  margin: 0;
+  width: 50px;
+  height: 50px;
+  filter: invert(100%);
+}
+
+/* Username Form*/
 .usernameForm {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 25%;
+  margin-top: 0%;
 }
 .usernameInput:focus {
-  outline: 3px solid rgba(255, 255, 255, 0.5);
+  outline: 0;
+  box-shadow: 0 0 30px -4px white;
 }
 .usernameInput {
   font-size: 20px;
@@ -19,11 +58,13 @@ body {
   margin-bottom: 20px;
   border-radius: 10px;
   border: 3px black solid;
+  box-shadow: 0 0 15px -2px white;
 }
+
+/* Submit button */
 .submitButton:hover {
-  outline: 5px solid rgba(0, 98, 255, 0.5);
   color: rgb(255, 255, 255);
-  box-shadow: 0px 0px;
+  box-shadow: 0px 0px 30px -2px rgb(0, 110, 255);
 }
 .submitButton {
   font-family: Arial;
@@ -38,27 +79,64 @@ body {
 
 /* mobile */
 @media only screen and (max-width: 1250px) {
-  .usernameForm {
+  /* Dark mode mobile*/
+  .darkMode .usernameInput {
+    box-shadow: 0 0 30px -3px black;
+  }
+  .darkMode .usernameInput:focus {
+    box-shadow: 0 0 60px -6px black;
+  }
+  .darkMode .darkModeButton {
+    box-shadow: 0 0px 30px -3px black;
+  }
+
+  /* Dark mode button mobile*/
+  .darkModeButton {
+    width: 150px;
+    height: 150px;
+    padding: 0;
     margin-top: 50%;
+    margin-bottom: 2.5%;
+    margin-left: calc(50% + 200px);
+    background-color: transparent;
+    border: 0;
+    border-radius: 75px;
+    box-shadow: 0 0px 30px -3px white;
+  }
+
+  .darkModeIcon {
+    margin: 0;
+    width: 50px;
+    height: 50px;
+    filter: invert(100%);
+  }
+  /* Username form mobile */
+  .usernameForm {
+    margin-top: 5%;
+  }
+  .usernameInput:focus {
+    box-shadow: 0 0 60px -6px white;
   }
   .usernameInput::placeholder {
-    white-space: pre-line;
+    font-size: 50px;
   }
   .usernameInput {
     width: 700px;
     height: 150px;
-    font-size: 50px;
+    border-radius: 40px;
+    font-size: 80px;
+    box-shadow: 0 0 30px -3px white;
   }
+  /* Submit button mobile*/
   .submitButton {
     margin-top: 50px;
     width: 400px;
     height: 120px;
     font-size: 80px;
+    border-radius: 40px;
     box-shadow: 0px 10px rgb(0, 110, 255);
   }
   .submitButton:hover {
-    outline: 20px solid rgba(0, 98, 255, 0.5);
-    color: rgb(255, 255, 255);
-    box-shadow: 0px 0px;
+    box-shadow: 0 0 80px -2px rgb(0, 110, 255);
   }
 }

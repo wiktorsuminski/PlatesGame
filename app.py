@@ -96,10 +96,7 @@ def home():
             session['user_score'] = int()
             session['user_plate_districts'] = all_plate_districts
 
-        print(session['user']+":"+str(len(session['user_plate_districts'])
-                                      )+" score:"+str(session['user_score']))
-        user_last_plate = session.get(
-            'user_last_plate_district', None)
+        user_last_plate = session.get('user_last_plate_district', None)
 
         if request.form.get('user_answer'):
             session['user_answer'] = request.form.get('user_answer').lower()
