@@ -100,6 +100,7 @@ def home():
                                       )+" score:"+str(session['user_score']))
         user_last_plate = session.get(
             'user_last_plate_district', None)
+
         if request.form.get('user_answer'):
             session['user_answer'] = request.form.get('user_answer').lower()
             user_answer = session['user_answer']
@@ -110,11 +111,20 @@ def home():
                 else:
                     user_last_plate_district = user_last_plate.split(' ', 1)[0]
 
-                if user_answer in session['user_plate_districts'][user_last_plate_district]:
+                if user_answer == session['user_plate_districts'][user_last_plate_district]:
                     user_outcome = 'Dobrze'
                     answer_color = 'lime'
                     session['user_score'] += 1
                     del session['user_plate_districts'][user_last_plate_district]
+                elif isinstance(session['user_plate_districts'][user_last_plate_district], list):
+                    if user_answer in session['user_plate_districts'][user_last_plate_district]:
+                        user_outcome = 'Dobrze'
+                        answer_color = 'lime'
+                        session['user_score'] += 1
+                        del session['user_plate_districts'][user_last_plate_district]
+                    else:
+                        user_outcome = "Źle"
+                        answer_color = 'red'
                 else:
                     user_outcome = "Źle"
                     answer_color = 'red'
@@ -149,4 +159,4 @@ def clear():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0', port=5000)

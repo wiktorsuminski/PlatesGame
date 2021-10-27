@@ -35,3 +35,30 @@ body {
   width: 100px;
   height: 40px;
 }
+
+/* mobile */
+@media only screen and (max-width: 1250px) {
+  .usernameForm {
+    margin-top: 50%;
+  }
+  .usernameInput::placeholder {
+    white-space: pre-line;
+  }
+  .usernameInput {
+    width: 700px;
+    height: 150px;
+    font-size: 50px;
+  }
+  .submitButton {
+    margin-top: 50px;
+    width: 400px;
+    height: 120px;
+    font-size: 80px;
+    box-shadow: 0px 10px rgb(0, 110, 255);
+  }
+  .submitButton:hover {
+    outline: 20px solid rgba(0, 98, 255, 0.5);
+    color: rgb(255, 255, 255);
+    box-shadow: 0px 0px;
+  }
+}
