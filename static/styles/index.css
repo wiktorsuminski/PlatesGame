@@ -1,17 +1,18 @@
 body {
   margin: 0 auto;
   background-color: rgb(37, 37, 37);
+  font-family: Arial;
 }
-
-@font-face {
-  font-family: Arklatrs;
-  src: url('../fonts/arklatrs.ttf');
-}
-/* Dark mode*/
+/* dark mode */
 .darkMode {
-  background: white;
+  background-color: rgb(255, 255, 255);
 }
-.darkMode .userScore {
+.darkMode #howMuchCanYouGuess {
+  color: green;
+  border-color: green;
+  box-shadow: 0px 5px 30px -2px green;
+}
+.darkMode .modeSelectTitle {
   color: black;
 }
 .darkMode .darkModeIcon {
@@ -20,20 +21,13 @@ body {
 .darkMode .darkModeButton {
   box-shadow: 0 0px 10px -2px black;
 }
-.darkMode .userAnswer {
-  box-shadow: 0 0 15px -2px black;
-}
-.darkMode .userAnswer:focus {
-  box-shadow: 0 0 30px -4px black;
-}
 /* Dark mode button */
 .darkModeButton {
   width: 50px;
   height: 50px;
   padding: 0;
-  margin-top: -5%;
-  margin-bottom: 2.5%;
-  margin-left: calc(50% + 556px);
+  margin-left: calc(50% - 25px);
+  margin-top: 50px;
   background-color: transparent;
   border: 0;
   border-radius: 25px;
@@ -46,226 +40,129 @@ body {
   height: 50px;
   filter: invert(100%);
 }
-/*Score*/
-.userScore {
-  font-family: Arial;
+/* Title */
+.modeSelectTitle {
+  color: white;
+  display: flex;
+  justify-content: center;
+  font-size: 40px;
+}
+/* Mode Buttons */
+.modes {
+  display: flex;
+  justify-content: center;
+}
+.modeButton {
+  text-align: center;
+  color: white;
+  width: 500px;
+  height: 700px;
+  border: 2px solid;
+  margin: 25px;
+  text-decoration: none;
+  border-radius: 25px;
+}
+
+.modeName {
+  margin-top: 50%;
+  margin-bottom: 10%;
+  font-size: 60px;
+}
+.modeDesc {
+  font-size: 30x;
+}
+/* different mode == different color*/
+#guessAll {
+  color: red;
+  box-shadow: 0px 5px 30px -2px;
+}
+#guessOnTime {
+  color: orange;
+  box-shadow: 0px 5px 30px -2px;
+}
+
+#howMuchCanYouGuess {
+  color: greenyellow;
+  box-shadow: 0px 5px 30px -2px;
+}
+
+/* Score tables */
+.scoreTables {
+  display: flex;
+  justify-content: center;
+}
+.scoreButton {
   font-size: 30px;
+  text-align: center;
   color: white;
-  margin-top: 5%;
-  margin-bottom: 2.5%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.darkMode .plate {
-  box-shadow: 0 0 20px -2px black;
-}
-
-/*Plate*/
-.plate {
-  height: 200px;
-  width: 1213px;
-  margin-left: calc(50vw - 606px);
-  margin-right: calc(50vw - 606px);
-  border: solid black 2px;
-  border-radius: 20px;
-  background-color: white;
-  box-shadow: 0 0 15px -2px white;
-}
-
-.plateNumbers {
-  font-size: 200px;
-  font-family: Arklatrs;
-  text-align: right;
-  margin-right: 20px;
-  margin-left: 6%;
-  white-space: pre;
-  display: inline-block;
-}
-.country {
-  width: 70px;
-  border-radius: 17px 0 0px 17px;
-  color: rgb(255, 255, 255);
-  position: fixed;
-  display: inline-block;
-  height: 200px;
-  background-color: rgb(0, 4, 255);
-}
-.countryCode {
-  font-family: Arklatrs;
-  font-size: 40px;
-  position: absolute;
-  left: 10%;
-  bottom: 20px;
-}
-.ueStars {
-  width: 95%;
-  position: absolute;
-  top: 20px;
-}
-/*Form*/
-.answerForm {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-.userAnswer:focus {
-  outline: 0;
-  box-shadow: 0 0 30px -4px white;
-}
-
-.userAnswer {
-  font-family: Arial;
-  border: 2px black solid;
-  border-radius: 10px;
-  width: 1213px;
-  height: 50px;
-  margin: 80px;
-  font-size: 40px;
-  background-color: rgb(218, 218, 218);
-  color: black;
-  box-shadow: 0 0 15px -2px white;
-}
-.submitButton:hover {
-  box-shadow: 0px 0px 30px -2px rgb(0, 110, 255);
-  color: white;
-}
-.submitButton {
-  font-family: Arial;
-  font-size: 20px;
-  box-shadow: 0px 5px rgb(0, 110, 255);
-  border: 0;
-  background-color: rgb(0, 162, 255);
-  border-radius: 10px;
-  width: 250px;
-  height: 50px;
+  width: 500px;
+  height: 700px;
+  border: 2px solid white;
+  margin: 25px;
+  border-radius: 25px;
+  color: rgb(0, 110, 255);
+  border-color: rgb(0, 110, 255);
+  box-shadow: 0px -5px 30px -2px rgb(0, 110, 255);
 }
 
 @media only screen and (max-width: 1250px) {
-  /* Dark mode mobile */
-  .darkMode .darkModeButton {
-    box-shadow: 0 0 30px -2px black;
+  /* dark mode mobile */
+  .darkMode #howMuchCanYouGuessScore {
+    color: green;
+    border-color: green;
+    box-shadow: 0px -5px 30px -2px;
   }
-  .darkMode .plate {
-    box-shadow: 0 0 30px -2px black;
-  }
-  .darkMode .userAnswer {
-    box-shadow: 0 0 30px -3px black;
-  }
-  .darkMode .userAnswer:focus {
-    box-shadow: 0 0 60px -6px black;
-  }
-  /* Dark mode button mobile*/
+  /* dark mode button mobile */
   .darkModeButton {
     width: 150px;
     height: 150px;
     padding: 0;
-    margin-top: 2.5%;
-    margin-left: calc(50% + 250px);
+    margin-bottom: 2.5%;
+    margin-left: calc(50% + -75px);
     background-color: transparent;
     border: 0;
     border-radius: 75px;
-    box-shadow: 0 0px 30px -2px white;
+    box-shadow: 0 0px 30px -3px white;
   }
-  .darkModeIcon {
-    width: 150px;
-    height: 150px;
-  }
-
-  /* Score mobile */
-  .userScore {
-    font-family: Arial;
-    font-size: 60px;
-    color: white;
-    margin-top: 5%;
-    margin-bottom: 2.5%;
-    display: flex;
+  /* modes mobile */
+  .modes {
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
   }
-  /* Plate mobile */
-  .plate {
-    margin-top: 5%;
-    height: 700px;
-    width: 800px;
-    margin-left: calc(50vw - 400px);
-    position: relative;
-    border: solid black 6px;
-    border-radius: 20px;
-    background-color: white;
-    box-shadow: 0 0 30px -2px white;
+  .modeButton {
+    width: 700px;
+    margin-left: calc(50% - 350px);
   }
-
-  .plateNumbers {
-    font-size: 230px;
-    margin-right: 50px;
-    font-family: Arklatrs;
-    line-height: 150%;
-    text-align: center;
-    white-space: pre-line;
-    display: inline-block;
+  .modeName {
+    font-size: 70px;
+    margin-top: 30%;
   }
-  .country {
-    width: 150px;
-    height: 350px;
-    border-radius: 14px 0 0px 0px;
-    color: rgb(255, 255, 255);
-    position: absolute;
-    display: inline-block;
-
-    background-color: rgb(0, 4, 255);
+  .modeDesc {
+    font-size: 40px;
   }
-  .countryCode {
-    font-family: Arklatrs;
-    font-size: 100px;
-    position: absolute;
-    left: 10%;
-    bottom: 20px;
-  }
-  .ueStars {
-    width: 95%;
-    position: absolute;
-    top: 20px;
-  }
-  /* Form mobile */
-  .answerForm {
-    display: flex;
+  /* score tables mobile*/
+  .scoreTables {
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
   }
-  .userAnswer:focus {
-    box-shadow: 0 0 60px -6px white;
+  .scoreButton {
+    font-size: 40px;
+    margin-left: calc(50% - 350px);
+    width: 700px;
+  }
+  /* different mode == different color but on mobile only*/
+  #guessAllScore {
+    color: red;
+    border-color: red;
+    box-shadow: 0px -5px 30px -2px red;
+  }
+  #guessOnTimeScore {
+    color: orange;
+    border-color: orange;
+    box-shadow: 0px -5px 30px -2px orange;
   }
 
-  .userAnswer {
-    font-family: Arial;
-    border: 2px black solid;
-    border-radius: 10px;
-    width: 800px;
-    height: 100px;
-    margin: 80px;
-    font-size: 60px;
-    background-color: rgb(218, 218, 218);
-    color: black;
-    box-shadow: 0 0 30px -3px white;
-  }
-  .submitButton:hover {
-    color: white;
-    box-shadow: 0px 0px 60px -6px rgb(0, 162, 255);
-  }
-  .submitButton {
-    font-family: Arial;
-    font-size: 80px;
-    box-shadow: 0px 10px rgb(0, 110, 255);
-    border: 0;
-    background-color: rgb(0, 162, 255);
-    border-radius: 10px;
-    width: 400px;
-    height: 100px;
+  #howMuchCanYouGuessScore {
+    color: greenyellow;
+    border-color: greenyellow;
+    box-shadow: 0px -5px 30px -2px;
   }
 }

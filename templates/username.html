@@ -6,10 +6,26 @@
         <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/username.css') }}">
     </head>
     <body>
+        <style>
+            .usernameInput::placeholder{
+                color: {{style_color}};
+            }
+            .usernameInput{
+                color:{{style_color}};
+            }
+            .submitButton:hover {
+                color: rgb(255, 255, 255);
+                box-shadow: 0px 0px 30px -2px {{style_color}};
+            }
+            .submitButton{
+                box-shadow: 0px 5px rgb(24, 24, 24);
+                background-color: {{style_color}};
+            }
+        </style>
         <button onclick="dark_mode_toggle()" class="darkModeButton"><img class="darkModeIcon" src="{{ url_for('static',filename='icons/dark-mode-icon.png') }}"></button>
 
-        <form action="{{ url_for('home') }}" method="POST" class="usernameForm">
-            <input required name="username_input" class="usernameInput" placeholder="Wpisz swoję imię lub nick">
+        <form action="{{ url_for(game_mode) }}" method="POST" class="usernameForm">
+            <input required name="username_input" class="usernameInput" placeholder="Wpisz swoję imię lub nick" >
             <button type="submit" class="submitButton">Zapisz</button>
         </form>
     </body>

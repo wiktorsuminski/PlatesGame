@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Polskie Tablice</title>
+        <meta charset="utf-8">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/game.css') }}">
+        
+    </head>
+    <body>
+        <style>
+            .plate{
+                box-shadow: 0 0 15px -2px {{style_color}};
+            }
+            .userAnswer{
+                color: {{style_color}};
+            }
+            .userAnswer::placeholder{
+                color: {{style_color}};
+            }
+            .submitButton:hover {
+                color: rgb(255, 255, 255);
+                box-shadow: 0px 0px 30px -2px {{style_color}};
+            }
+            .submitButton{
+                box-shadow: 0px 5px rgb(24, 24, 24);
+                background-color: {{style_color}};
+            }
+        </style>
+        <div name="user_score" class="userScore">
+        {% if user_score > 0 %}
+        <div>Aktualny wynik: {{user_score}}/{{plates_amount}} </div>
+        {% else %}
+        <div>Aktualny wynik: 0/{{plates_amount}} </div>
+        {% endif %}
+        {% if user_outcome %}
+        <div>Ostatnia tablica: <a style="color:{{answer_color}};">{{user_outcome}}</a></div>
+        {% endif %}
+        {% if game_mode=='guess_on_time'%}
+        <div class="timer">
+            <a id="minutes">00</a>:
+            <a id="seconds">00</a>
+        </div>
+        {% endif %}
+        </div>
+        <button onclick="dark_mode_toggle()" class="darkModeButton"><img class="darkModeIcon" src="{{ url_for('static',filename='icons/dark-mode-icon.png') }}"></button>
+        {% set user_last_plate_district=new_plate_district %}
+        
+        <div name="plate" class="plate">
+            <div class="country"><div><img class="ueStars" src="{{ url_for('static',filename='images/UE_stars.png') }}"></div><a class="countryCode">PL</a></div>
+            <div class="plateNumbers">{{ new_plate }}</div>
+        </div>
+        
+        <form action="{{ url_for(game_mode) }}" method="POST" class="answerForm">
+            <input name="user_answer" class="userAnswer" placeholder="Wpisz Powiat lub Miasto">
+            <button type="submit" class="submitButton">Sprawdź</button>
+        </form>
+        
+
+    </body>
+    <script>
+        var game_mode='{{game_mode}}'
+        var plate='{{new_plate}}'
+        if(game_mode=='guess_on_time'){
+            if(sessionStorage.getItem('timer')===null){
+                sessionStorage.setItem('timer',Date.now());
+                setInterval(function(){
+                    var seconds=Math.floor((Date.now()-sessionStorage.getItem('timer'))/1000);
+                    var minutes=Math.floor(seconds/60);
+                    if(minutes>0){
+                        seconds=seconds-60*minutes;
+                    }
+                    if(minutes<10){
+                        document.getElementById('minutes').innerHTML='0'+minutes;
+                    }
+                    else{
+                        document.getElementById('minutes').innerHTML=minutes;
+                    }
+                    if(seconds<10){
+                        document.getElementById('seconds').innerHTML='0'+seconds;
+                    }
+                    else{
+                        document.getElementById('seconds').innerHTML=seconds;
+                    }
+                },10)
+            }
+            else{
+                var timer_interval=setInterval(function(){
+                    var seconds=Math.floor((Date.now()-sessionStorage.getItem('timer'))/1000);
+                    var minutes=Math.floor(seconds/60);
+                    if(minutes>0){
+                        seconds=seconds-60*minutes;
+                    }
+                    if(minutes<10){
+                        document.getElementById('minutes').innerHTML='0'+minutes;
+                    }
+                    else{
+                        document.getElementById('minutes').innerHTML=minutes;
+                    }
+                    if(seconds<10){
+                        document.getElementById('seconds').innerHTML='0'+seconds;
+                    }
+                    else{
+                        document.getElementById('seconds').innerHTML=seconds;
+                    }
+                    
+                },10)
+                
+            }
+            
+            if(plate=='Koniec gry'){
+                var seconds=Math.floor((Date.now()-sessionStorage.getItem('timer'))/1000);
+                    var minutes=Math.floor(seconds/60);
+                    if(minutes>0){
+                        seconds=seconds-60*minutes;
+                    }
+                    if(minutes<10){
+                        document.getElementById('minutes').innerHTML='0'+minutes;
+                    }
+                    else{
+                        document.getElementById('minutes').innerHTML=minutes;
+                    }
+                    if(seconds<10){
+                        document.getElementById('seconds').innerHTML='0'+seconds;
+                    }
+                    else{
+                        document.getElementById('seconds').innerHTML=seconds;
+                    }
+                    
+                clearInterval(timer_interval)
+                sessionStorage.removeItem('timer')
+            }
+        }
+        onload=if_dark_mode();
+        function dark_mode_toggle(){
+            if(sessionStorage.getItem('dark_mode_off')===null){
+                dark_mode()
+                sessionStorage.setItem('dark_mode_off',true);
+            }
+            else if (sessionStorage.getItem('dark_mode_off')=='true'){
+                dark_mode();
+                sessionStorage.setItem('dark_mode_off',false);
+            }
+            else {
+                dark_mode();
+                sessionStorage.setItem('dark_mode_off',true)
+            }
+        }
+        function dark_mode(){
+            var element=document.body;
+            element.classList.toggle("darkMode");
+        }
+        function if_dark_mode(){
+            if(sessionStorage.getItem('dark_mode_off')=='true'){
+                dark_mode()
+            }
+        }
+    </script>
+</html>

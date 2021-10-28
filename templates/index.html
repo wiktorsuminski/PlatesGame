@@ -1,59 +1,48 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Polskie Tablice</title>
+        <title>Polskie tablice-wybór trybu</title>
         <meta charset="utf-8">
-        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/index.css') }}">
-        
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/index.css') }}">
     </head>
     <body>
-        <div name="user_score" class="userScore">
-        {% if user_score > 0 %}
-        <div>Aktualny wynik: {{user_score}}/401 </div>
-        {% else %}
-        <div>Aktualny wynik: 0/401 </div>
-        {% endif %}
-        {% if user_outcome %}
-        <div>Ostatnia tablica: <a style="color:{{answer_color}};">{{user_outcome}}</a></div>
-        {% endif %}
-        </div>
         <button onclick="dark_mode_toggle()" class="darkModeButton"><img class="darkModeIcon" src="{{ url_for('static',filename='icons/dark-mode-icon.png') }}"></button>
-        {% set user_last_plate_district=new_plate_district %}
-        
-        <div name="plate" class="plate">
-            <div class="country"><div><img class="ueStars" src="{{ url_for('static',filename='images/UE_stars.png') }}"></div><a class="countryCode">PL</a></div>
-            <div class="plateNumbers">{{ new_plate }}</div>
+        <p class="modeSelectTitle">Wybierz tryb gry</p>
+        <div class="modes">
+            <a href="{{url_for('guess_all')}}" class="modeButton" id="guessAll"><p class="modeName">Wszystkie tablice</p><p class="modeDesc">Gra się kończy po zgadnięciu każdej z 401 tablic</p></a>
+            <a href="{{url_for('guess_on_time')}}" class="modeButton" id="guessOnTime"><p class="modeName">50 tablic na czas</p><p class="modeDesc">Gra się kończy po zgadnięciu każdej z 50 tablic, liczony jest czas </p></a>
+            <a class="modeButton" id="howMuchCanYouGuess"><p class="modeName">Jak najwięcej tablic</p><p class="modeDesc">Gra się kończy gdy skończą się tablice, wynik to liczba poprawnych odpowiedzi</p></a>
         </div>
-        
-        <form action="{{ url_for('home') }}" method="POST" class="answerForm">
-            <input name="user_answer" class="userAnswer" placeholder="Wpisz Powiat lub Miasto">
-            <button type="submit" class="submitButton">Sprawdź</button>
-        </form>
+        <div class="scoreTables">
+            <a class="scoreButton" id="guessAllScore"><p class="scoreModeName">Tym się udało:</p></a>
+            <a class="scoreButton" id="guessOnTimeScore"><p class="scoreModeName">Wyniki:</p></a>
+            <a class="scoreButton" id="howMuchCanYouGuessScore"><p class="scoreModeName">Wyniki:</p></a>
+        </div>
     </body>
     <script>
         onload=if_dark_mode();
-        function dark_mode_toggle(){
-            if(sessionStorage.getItem('dark_mode_off')===null){
-                dark_mode()
-                sessionStorage.setItem('dark_mode_off',true);
+            function dark_mode_toggle(){
+                if(sessionStorage.getItem('dark_mode_off')===null){
+                    dark_mode()
+                    sessionStorage.setItem('dark_mode_off',true);
+                }
+                else if (sessionStorage.getItem('dark_mode_off')=='true'){
+                    dark_mode();
+                    sessionStorage.setItem('dark_mode_off',false);
+                }
+                else {
+                    dark_mode();
+                    sessionStorage.setItem('dark_mode_off',true)
+                }
             }
-            else if (sessionStorage.getItem('dark_mode_off')=='true'){
-                dark_mode();
-                sessionStorage.setItem('dark_mode_off',false);
+            function dark_mode(){
+                var element=document.body;
+                element.classList.toggle("darkMode");
             }
-            else {
-                dark_mode();
-                sessionStorage.setItem('dark_mode_off',true)
+            function if_dark_mode(){
+                if(sessionStorage.getItem('dark_mode_off')=='true'){
+                    dark_mode()
+                }
             }
-        }
-        function dark_mode(){
-            var element=document.body;
-            element.classList.toggle("darkMode");
-        }
-        function if_dark_mode(){
-            if(sessionStorage.getItem('dark_mode_off')=='true'){
-                dark_mode()
-            }
-        }
     </script>
 </html>

@@ -2,13 +2,30 @@ from flask import Flask, render_template, request, session, url_for, redirect
 from flask_session import Session
 import random
 import string
+from flask_sqlalchemy import SQLAlchemy
+
 
 app = Flask(__name__)
 
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database/users_scores.sqlite3'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = "testowyklucz"
 SESSION_TYPE = 'redis'
 app.config.from_object(__name__)
 Session(app)
+
+db = SQLAlchemy(app)
+
+
+class users_scores(db.Model):
+    score_id = db.Column('ScoreID', db.Integer, primary_key=True)
+    score_user = db.Column(db.String(100))
+    score_score = db.Column(db.String(100))
+
+    def __init__(self, score_user, score_score):
+        self.score_user = score_user
+        self.score_score = score_score
+
 
 random.seed(random.randint(0, 999999))
 all_plate_districts = {'BI': 'białystok', 'BS': 'suwałki', 'BL': 'łomża', 'BAU': 'powiat augustowski', 'BIA': 'powiat białostocki', 'BBI': 'powiat bielski',
@@ -87,14 +104,23 @@ def plate_number_generator(size=5, chars=plate_chars):
     return ''.join(random.choice(chars) for _ in range(size))
 
 
-@app.route('/', methods=["GET", "POST"])
+@app.route('/')
 def home():
+    return render_template('index.html')
+
+
+@app.route('/guess_all', methods=["GET", "POST"])
+def guess_all():
+    style_color = 'red'
     global all_plate_districts
+    game_mode = 'guess_all'
     if request.method == "POST":
         if "username_input" in request.form:
             session['user'] = request.form['username_input']
             session['user_score'] = int()
             session['user_plate_districts'] = all_plate_districts
+            session['user_amount_of_plates'] = len(
+                session['user_plate_districts'])
 
         user_last_plate = session.get('user_last_plate_district', None)
 
@@ -141,19 +167,101 @@ def home():
             else:
                 new_plate = new_plate_district[0]+" "+plate_number_generator()
             session['user_last_plate_district'] = new_plate
-            return render_template('index.html', new_plate=new_plate, user_outcome=user_outcome, answer_color=answer_color, user_score=session['user_score'], newPlateDistrict=new_plate_district)
+            return render_template('game.html', new_plate=new_plate, user_outcome=user_outcome, answer_color=answer_color,
+                                   user_score=session['user_score'], newPlateDistrict=new_plate_district, plates_amount=session['user_amount_of_plates'],
+                                   game_mode=game_mode, style_color=style_color)
         else:
             new_plate = "Koniec gry"
-            return render_template('index.html', new_plate=new_plate, user_outcome=user_outcome, answer_color=answer_color, user_score=session['user_score'])
+            return render_template('game.html', new_plate=new_plate, user_outcome=user_outcome, answer_color=answer_color,
+                                   user_score=session['user_score'],  plates_amount=session['user_amount_of_plates'],
+                                   game_mode=game_mode, style_color=style_color)
     else:
-        return render_template('username.html')
+        return render_template('username.html', game_mode=game_mode, style_color=style_color)
 
 
-@ app.route('/clear')
+@app.route('/guess_on_time', methods=['POST', 'GET'])
+def guess_on_time():
+    style_color = 'orange'
+    global all_plate_districts
+    game_mode = 'guess_on_time'
+    user_plates_all_districts = all_plate_districts
+    if request.method == "POST":
+        if "username_input" in request.form:
+            session['user'] = request.form['username_input']
+            session['user_score'] = int()
+            session['user_plate_districts'] = {}
+            for _ in range(50):
+                add_plate_district_to_districts_list = random.choice(
+                    list(user_plates_all_districts.items()))
+                del user_plates_all_districts[add_plate_district_to_districts_list[0]]
+                session['user_plate_districts'][add_plate_district_to_districts_list[0]
+                                                ] = add_plate_district_to_districts_list[1]
+                session['user_amount_of_plates'] = len(
+                    session['user_plate_districts'])
+
+        user_last_plate = session.get('user_last_plate_district', None)
+
+        if request.form.get('user_answer'):
+            session['user_answer'] = request.form.get('user_answer').lower()
+            user_answer = session['user_answer']
+            if user_last_plate != None:
+                if len(user_last_plate) == 8:
+                    user_last_plate_district = user_last_plate.split('\t', 1)[
+                        0]
+                else:
+                    user_last_plate_district = user_last_plate.split(' ', 1)[0]
+
+                if user_answer == session['user_plate_districts'][user_last_plate_district]:
+                    user_outcome = 'Dobrze'
+                    answer_color = 'lime'
+                    session['user_score'] += 1
+                    del session['user_plate_districts'][user_last_plate_district]
+                elif isinstance(session['user_plate_districts'][user_last_plate_district], list):
+                    if user_answer in session['user_plate_districts'][user_last_plate_district]:
+                        user_outcome = 'Dobrze'
+                        answer_color = 'lime'
+                        session['user_score'] += 1
+                        del session['user_plate_districts'][user_last_plate_district]
+                    else:
+                        user_outcome = "Źle"
+                        answer_color = 'red'
+                else:
+                    user_outcome = "Źle"
+                    answer_color = 'red'
+        else:
+            if user_last_plate == None:
+                user_outcome = ''
+                answer_color = ''
+            else:
+                user_outcome = 'Źle'
+                answer_color = 'red'
+        if len(session['user_plate_districts']) > 0:
+            new_plate_district = random.choice(
+                list(dict(session['user_plate_districts']).items()))
+            if len(new_plate_district[0]) == 2:
+                new_plate = new_plate_district[0] +\
+                    '\t'+plate_number_generator()
+            else:
+                new_plate = new_plate_district[0]+" "+plate_number_generator()
+            session['user_last_plate_district'] = new_plate
+            return render_template('game.html', new_plate=new_plate, user_outcome=user_outcome, answer_color=answer_color,
+                                   user_score=session['user_score'], newPlateDistrict=new_plate_district, plates_amount=session['user_amount_of_plates'],
+                                   game_mode=game_mode, style_color=style_color)
+        else:
+            new_plate = "Koniec gry"
+            return render_template('game.html', new_plate=new_plate, user_outcome=user_outcome, answer_color=answer_color,
+                                   user_score=session['user_score'], plates_amount=session['user_amount_of_plates'],
+                                   game_mode=game_mode, style_color=style_color)
+    else:
+        return render_template('username.html', game_mode=game_mode, style_color=style_color)
+
+
+@app.route('/clear')
 def clear():
     session.clear()
     return redirect(url_for('home'))
 
 
 if __name__ == '__main__':
+    db.create_all()
     app.run(debug=True, host='0.0.0.0', port=5000)

@@ -6,12 +6,7 @@ body {
 .darkMode {
   background-color: white;
 }
-.darkMode .usernameInput {
-  box-shadow: 0 0 15px -2px black;
-}
-.darkMode .usernameInput:focus {
-  box-shadow: 0 0 30px -4px black;
-}
+
 .darkMode .darkModeIcon {
   filter: invert(0%);
 }
@@ -47,9 +42,10 @@ body {
   align-items: center;
   margin-top: 0%;
 }
+
 .usernameInput:focus {
   outline: 0;
-  box-shadow: 0 0 30px -4px white;
+  box-shadow: 0 0 30px -4px;
 }
 .usernameInput {
   font-size: 20px;
@@ -57,14 +53,15 @@ body {
   height: 50px;
   margin-bottom: 20px;
   border-radius: 10px;
-  border: 3px black solid;
-  box-shadow: 0 0 15px -2px white;
+  border: 3px solid;
+  box-shadow: 0 0 15px -2px;
+  background-color: transparent;
 }
 
 /* Submit button */
 .submitButton:hover {
   color: rgb(255, 255, 255);
-  box-shadow: 0px 0px 30px -2px rgb(0, 110, 255);
+  box-shadow: 0px 0px 30px -2px;
 }
 .submitButton {
   font-family: Arial;
@@ -81,10 +78,10 @@ body {
 @media only screen and (max-width: 1250px) {
   /* Dark mode mobile*/
   .darkMode .usernameInput {
-    box-shadow: 0 0 30px -3px black;
+    box-shadow: 0 0 30px -3px;
   }
   .darkMode .usernameInput:focus {
-    box-shadow: 0 0 60px -6px black;
+    box-shadow: 0 0 60px -6px;
   }
   .darkMode .darkModeButton {
     box-shadow: 0 0px 30px -3px black;
@@ -115,7 +112,7 @@ body {
     margin-top: 5%;
   }
   .usernameInput:focus {
-    box-shadow: 0 0 60px -6px white;
+    box-shadow: 0 0 60px -6px;
   }
   .usernameInput::placeholder {
     font-size: 50px;
@@ -125,7 +122,7 @@ body {
     height: 150px;
     border-radius: 40px;
     font-size: 80px;
-    box-shadow: 0 0 30px -3px white;
+    box-shadow: 0 0 30px -3px;
   }
   /* Submit button mobile*/
   .submitButton {
